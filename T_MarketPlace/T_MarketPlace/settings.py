@@ -25,7 +25,7 @@ SECRET_KEY = 'zn_n91tn61f+iq_aryhw4fz=1j34jd1w$y(!&0%f^ih1*j9n_m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','tmarketplace.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','tmp.pythonanywhere.com']
 
 
 # Application definition
