@@ -162,7 +162,8 @@ def auto_market_data_saving(req):
     data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
     post_res = requests.post(data_url)
     post_res = post_res.content.decode('utf-8')
-    datas = post_res.json()["DATA"]
+    datas = json.loads(post_res)["DATA"]
+    # datas = post_res.json()["DATA"]
     # datas = json.loads(datas)
     insert_cnt = 0
     print(datas)
