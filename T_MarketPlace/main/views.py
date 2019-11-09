@@ -5,13 +5,9 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Market, Festival
-<<<<<<< HEAD
 from .forms import MarketForm, FestivalForm
-=======
-from .forms import MarketForm
 
 import json
->>>>>>> 3d7bb12a340cd886d3c9016cf6812ee407b14ae1
 # Create your views here
 
 

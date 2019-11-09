@@ -5,7 +5,7 @@ from .models import Market, Festival
 class MarketForm(forms.ModelForm):
     class Meta:
         model = Market
-        fields = ['user', 'url', 'content', 'photo', ]
+        fields = ['author', 'url', 'content', 'photo', ]
 
 
 class FestivalForm(forms.ModelForm):
