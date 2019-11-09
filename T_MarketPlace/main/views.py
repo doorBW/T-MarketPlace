@@ -15,7 +15,7 @@ from time import sleep
 
 # 메인 페이지
 def index(req):
-    markets = Market.objects.all()
+    markets = Market.objects.all().order_by('name')
     festivals = Festival.objects.all()
     return render(req, 'index.html', {'markets': markets, 'festivals': festivals})
 # 로그인 기능
