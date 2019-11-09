@@ -38,3 +38,6 @@ class Festival(models.Model):
     url = models.TextField(null=True)
     content = models.TextField(null=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def summary(self):
+        return self.content[:30]
