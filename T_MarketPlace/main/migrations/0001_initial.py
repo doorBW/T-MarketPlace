@@ -20,11 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True,
                                         primary_key=True, serialize=False, verbose_name='ID')),
-                << << << < HEAD
-                ('author', models.CharField(max_length=20)),
-                == == == =
                 ('author', models.CharField(default='System', max_length=20)),
-                >>>>>> > e08dff41d1303e01ff12c91ad63b81d2c1765db9
                 ('name', models.CharField(max_length=100)),
                 ('photo', models.ImageField(
                     default='../media/images/markets.png', upload_to='images/')),
@@ -36,8 +32,6 @@ class Migration(migrations.Migration):
                 ('longitude', models.CharField(max_length=100)),
                 ('created_at', models.DateTimeField(
                     default=django.utils.timezone.now)),
-                << << << < HEAD
-                == == == =
             ],
         ),
         migrations.CreateModel(
@@ -51,7 +45,6 @@ class Migration(migrations.Migration):
                     default=django.utils.timezone.now, verbose_name='Date published')),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                >>>>>> > e08dff41d1303e01ff12c91ad63b81d2c1765db9
             ],
         ),
         migrations.CreateModel(

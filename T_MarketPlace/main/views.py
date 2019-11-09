@@ -7,14 +7,10 @@ from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
-<<<<<<< HEAD
-import json
-=======
 
 import json
 import requests
 from time import sleep
->>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 # Create your views here
 
 # 메인 페이지
@@ -96,11 +92,7 @@ def festival_new(req):
         form = FestivalForm()
         return render(req, 'newFestival.html', {'form': form})
 
-<<<<<<< HEAD
-
-=======
 # 메인 페이지 지도랑 사진 ajax
->>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 def market_click_ajax_event(req):
     sleep(2)
     market_id = req.POST.get('market_id')
