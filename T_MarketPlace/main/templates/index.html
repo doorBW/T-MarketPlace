@@ -67,13 +67,51 @@
     </script>
     <script>
         function mapFinderStart(){
-            // $('.new_banner_part').hide()
             $('#map_finder').toggle(); //ajax실행시 로딩바를 보여준다.
-            // $('.new_banner_part').show()
         };
 
         function mapFinderEnd(){
             $('#map_finder').toggle(); //ajax종료시 로딩바를 숨겨준다.
+        };
+
+        function dataUpdateStart(){
+                    //화면의 높이와 너비를 구합니다.
+            var maskHeight = $(document).height();
+            var maskWidth  = window.document.body.clientWidth;
+            
+            //화면에 출력할 마스크를 설정해줍니다.
+            var mask       ="<div id='mask' style='position:absolute; z-index:900; background-color:#000000; display:none; left:0; top:0;'></div>";
+            var loadingImg ='';
+            
+            loadingImg +="<div id='input_data' class='center_for_gif' >";
+            loadingImg +=" <img src='{% static 'main/img/input_data.gif' %}' style='position: relative; z-index:9001; display: block; margin: 0px auto;'/>";
+            loadingImg +="</div>"; 
+
+    // <div id="input_data" >
+    //     <img src="{% static 'main/img/input_data.gif' %}" alt="">
+    // </div>
+        
+            //화면에 레이어 추가
+            $('body')
+                .append(mask)
+                .append(loadingImg)
+                
+            //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+            $('#mask').css({
+                    'width' : maskWidth
+                    ,'height': maskHeight
+                    ,'opacity' :'0.5'
+            });
+        
+            //마스크 표시
+            $('#mask').show();  
+
+            $('#input_data').show(); //ajax실행시 로딩바를 보여준다.
+        };
+
+        function dataUpdateEnd(){
+            $('#mask, #input_data').hide(); //ajax종료시 로딩바를 숨겨준다.
+            $('#mask, #input_data').remove(); 
         };
 
         function search_enter(){
@@ -111,6 +149,31 @@
                     alert("예기치 못한 5류가 발생하였습니다 :'( ")
                     window.location.replace("")
                 },
+            })
+        }
+
+        function auto_data_update(){
+            console.log("@@");
+            $.ajax({
+                type: "POST",
+                url: "{% url 'auto_market_data_saving' %}",
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json",
+                beforeSend: function () {
+                    dataUpdateStart(); //로딩바 생성
+                },
+                complete: function () {
+                    dataUpdateEnd(); //로딩바 제거
+                },
+                success: function(res){ 
+                    alert(res.message)
+                    window.location.replace("")
+                },
+                error: function(request){ // 통신 실패시 - 로그인 페이지 리다이렉트
+                    alert("예기치 못한 5류가 발생하였습니다 :'( ")
+                    window.location.replace("")
+                },
+
             })
         }
     </script>
@@ -199,9 +262,6 @@
     <div id="map_finder" class="center_for_gif">
         <img src="{% static 'main/img/map_finder.gif' %}" alt="">
     </div>
-    <div id="input_data" class="center_for_gif">
-        <img src="{% static 'main/img/map_finder.gif' %}" alt="">
-    </div>
    <!--::header part start::-->
    {% include './nav-bar.html' %}
     <!-- Header part end-->
@@ -262,12 +322,12 @@
                         <div class="search_list_div">
                             <ul>
                             {% for market in markets %}
-                                <li onmouseover="search_list_each_mouse_over(this)" onmouseout="search_list_each_mouse_out(this)">
+                                <li onmouseover="search_list_each_mouse_over(this)" onmouseout="search_list_each_mouse_out(this)" style="margin-bottom: 10px;">
                                     <div id="market_{{market.id}}" name="market_{{market.id}}" class="search_list_each_div" onclick="marketClickEvent({{ market.id }})">
                                         <span class="search_list_each_icon"></span>
                                         <div>
-                                            <span class="search_list_each_text">&nbsp&nbsp{{ market.name }} (상시)</span>
-                                            &nbsp&nbsp&nbsp<span class="search_list_each_address">우리집</span>
+                                            <span class="search_list_each_text">&nbsp&nbsp{{ market.name }} ( {{market.open_day}} )</span>
+                                            &nbsp&nbsp&nbsp<span class="search_list_each_address">market.address</span>
                                         </div>
                                     </div>
                                     
