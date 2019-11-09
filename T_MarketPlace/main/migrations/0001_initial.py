@@ -39,15 +39,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image', models.ImageField(upload_to='images/')),
                 ('files', models.FileField(upload_to='files/')),
-<<<<<<< HEAD
-                ('upload_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Date published')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-=======
                 ('upload_date', models.DateTimeField(
                     default=django.utils.timezone.now, verbose_name='Date published')),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
->>>>>>> 82797e694abecb166be4ba5afa16571019874d7f
             ],
         ),
         migrations.CreateModel(
