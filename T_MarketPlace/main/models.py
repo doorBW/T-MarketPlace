@@ -15,13 +15,13 @@ class Profile(models.Model):
 
 
 class Market(models.Model):
-    author = models.CharField(max_length=20)
+    author = models.CharField(max_length=20,default="System")
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='images/')
+    photo = models.ImageField(upload_to='images/',default='images/markets.png')
     address = models.CharField(max_length=1000)
     url = models.TextField(null=True)
     content = models.TextField(null=True)
-    open_day = models.CharField(max_length=30)
+    open_day = models.CharField(max_length=30,default="알 수 없음")
     latitude = models.CharField(max_length=100)
     longitude = models.CharField(max_length=100)
     created_at = models.DateTimeField(default=timezone.now)
