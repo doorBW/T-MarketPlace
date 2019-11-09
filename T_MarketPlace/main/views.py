@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -113,6 +114,7 @@ def auto_market_data_saving(req):
     data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
     post_res = requests.post(data_url)
     datas = post_res.json()["DATA"]
+    # datas = json.loads(datas)
     insert_cnt = 0
     print(datas)
     for data in datas:
