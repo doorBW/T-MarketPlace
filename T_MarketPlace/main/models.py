@@ -43,4 +43,4 @@ class Festival(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def summary(self):
-        return self.content[:30]
+        return self.content[:40]

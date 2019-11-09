@@ -77,6 +77,12 @@ margin-bottom: 0px !important;
     height: 42vw;
     min-height: 530px;
 }
+/* footer CSS */
 .footer-area {
     scroll-snap-align: end;
+    padding: 30px 0px 0px !important;
+}
+
+.footer-area .copyright_part_text {
+    margin-top: 30px !important;
 }
