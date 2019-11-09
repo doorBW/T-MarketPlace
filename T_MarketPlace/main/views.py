@@ -140,10 +140,6 @@ def festival_update(req, festival_id):
     else:
         return render(req, 'updateFestival.html', {'markets': markets})
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f3cf5a63168b312e9eb14e09464cc6aa338af968
 # 메인 페이지 지도랑 사진 ajax
 def market_click_ajax_event(req):
     sleep(2)
