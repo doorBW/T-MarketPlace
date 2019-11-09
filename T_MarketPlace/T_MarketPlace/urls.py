@@ -17,7 +17,12 @@ urlpatterns = [
     path('festival/new/', main.views.festival_new, name='festival_new'),
     path('market/ajax/', main.views.market_click_ajax_event,
          name='market_click_ajax_event'),
-    path('auto_data_update', main.views.auto_market_data_saving, name='auto_market_data_saving')
+    path('detail/festival/<int:festival_id>/update',
+         main.views.festival_update, name='festival_update'),
+    path('detail/market/<int:market_id>/update',
+         main.views.market_update, name='market_update'),
+    path('auto_data_update', main.views.auto_market_data_saving,
+         name='auto_market_data_saving')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

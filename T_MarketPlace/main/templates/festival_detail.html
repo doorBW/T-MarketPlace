@@ -62,6 +62,9 @@
                                 <h5>url : {{festival.url}}</h5>
                                 <p>소개 : {{festival.content}}</p>
                                 <p>작성일 : <span>{{festival.created_at}}</span> </p>
+                                <div class="tour_details_content_btn">
+                                        <a href="{% url 'festival_update' festival.id %}" class="btn_1">수정</a>
+                                    </div>
                             </div>
                         </div>
                     </div>

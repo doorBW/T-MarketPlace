@@ -55,13 +55,61 @@
 
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.media }} {{ form.as_p }}
-                            <br />
-                            <input class="btn btn-dark" type="submit" value="submit" />
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">축제이름</label>
+                                <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="festival">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">시장이름</label>
+                                <select name="market" class="form-control form-control-sm">
+                                    {% for market in markets%}
+                                    <option value="{{market.id}}">{{market.name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">주소</label>
+                                <input name="address" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="address">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">열리는날</label>
+                                <input name="date" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">개최자</label>
+                                <input name="host" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="host">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">입장료</label>
+                                <input name="pay" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="pay">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">url</label>
+                                <input name="url" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="url">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">소개</label>
+                                <textarea name="content" class="form-control" rows="5" id="comment"
+                                    placeholder="contents"></textarea>
+                            </div>
+                            <input name='photo' type="file" id="customFile">
+                            <span style="float:right">
+                                <input class="btn btn-dark" type="submit" value="submit" />
+                            </span>
+                            <br>
+                            <br>
                         </form>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
