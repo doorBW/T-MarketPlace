@@ -28,6 +28,7 @@
 
     <script>
         $(document).ready(function(){
+
             $('#market_search_input').focus(function(){
                 $('#market_search_input_box_div').css('background-color','white');
                 $('#market_search_input_box_div').css('border','1px solid #0475f4');
@@ -48,8 +49,29 @@
                 //need if login when input value exist
                 $('#market_search_input').attr('placeholder','검색하고자 하는 키워드를 입력해주세요.');
             })
+
+            
+
         })
 
+    </script>
+    <script>
+        // market over&out event
+        function search_list_each_mouse_over(e){
+            e.style.fontWeight = "bold";
+        }
+        function search_list_each_mouse_out(e){
+            e.style.fontWeight = "normal";
+        }
+
+        // marketClickEvent
+        function marketClickEvent(market_id){
+            console.log(market_id)
+            $.ajax({
+                type: "POST",
+                url: "{% url %}"
+            })
+        }
     </script>
 
     <style>
@@ -65,6 +87,35 @@
         padding-right:25px;
         visibility:hidden;
     }
+
+    .search_list_each_div{
+        cursor: pointer;
+        display: table;
+    }
+
+    .search_list_each_icon{
+        display: table-cell;
+        width: 22px;
+        height: 22px;
+        background-image: url("{% static 'main/img/placeholder.png' %}");
+        background-repeat: no-repeat;
+        background-size: 22px;
+        vertical-align: middle;
+    }
+
+    .search_list_each_text{
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 16px;
+        line-height: 11px;
+    }
+
+    .search_list_each_address{
+        font-size: 13px;
+        color: gray;
+    }
+    
+
     </style>
 </head>
 
@@ -213,7 +264,20 @@
                         </div>
 
                         <div class="search_list_div">
-                        
+                            <ul>
+                            {% for market in markets %}
+                                <li onmouseover="search_list_each_mouse_over(this)" onmouseout="search_list_each_mouse_out(this)">
+                                    <div id="market_{{market.id}}" name="market_{{market.id}}" class="search_list_each_div" onclick="marketClickEvent({{ market.id }})">
+                                        <span class="search_list_each_icon"></span>
+                                        <div>
+                                            <span class="search_list_each_text">&nbsp&nbsp{{ market.user }} (상시)</span>
+                                            &nbsp&nbsp&nbsp<span class="search_list_each_address">우리집</span>
+                                        </div>
+                                    </div>
+                                    
+                                </li>
+                            {% endfor %}
+                            </ul>
                         </div>
 
                     </div>

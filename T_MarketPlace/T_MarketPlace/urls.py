@@ -12,4 +12,5 @@ urlpatterns = [
     path('detail/festival/<int:festival_id>/',
          main.views.festival_detail, name='festival_detail'),
     path('market/new/', main.views.market_new, name='market_new'),
+    path('market/ajax/<market_id>', main.views.market_click_ajax_event, name='market_click_ajax_event')
 ]

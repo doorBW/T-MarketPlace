@@ -64,3 +64,6 @@ def market_new(req):
     else:
         marketform = MarketForm()
         return render(req, 'newMarket.html', {'marketform': marketform})
+
+def market_click_ajax_event(req, market_id):
+    return "good"
