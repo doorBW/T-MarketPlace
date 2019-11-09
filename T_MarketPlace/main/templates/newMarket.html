@@ -1,0 +1,12 @@
+<div class="container">
+  <form method="POST">
+    {% csrf_token %}
+    <table>
+      {{
+        marketform.as_table
+      }}
+    </table>
+    <br />
+    <input class="btn btn-dark" type="submit" value="submit" />
+  </form>
+</div>

@@ -88,7 +88,10 @@
                                             Blog
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="blog.html">Blog</a>
+                                            
+                                            {% for festival in festivals %}
+                                            <a class="dropdown-item" href="{% url 'festival_detail' festival.id %}">festival</a>
+                                            {% endfor %}
                                             <a class="dropdown-item" href="single-blog.html">Single blog</a>
                                         </div>
                                     </li>
@@ -98,11 +101,15 @@
                                             aria-expanded="false">
                                             pages
                                         </a>
+                                        
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
                                             <a class="dropdown-item" href="top_place.html">top place</a>
-                                            <a class="dropdown-item" href="tour_details.html">tour details</a>
-                                            <a class="dropdown-item" href="elements.html">Elements</a>
+                                            {% for market in markets %}
+                                            <a class="dropdown-item" href="{% url 'market_detail' market.id %}">market</a>
+                                            {% endfor %}
+                                            <a class="dropdown-item" href="{% url 'market_new' %}">올리기</a>
                                         </div>
+                                        
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html">Contact</a>

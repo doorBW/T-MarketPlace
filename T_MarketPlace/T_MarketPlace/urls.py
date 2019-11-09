@@ -1,18 +1,3 @@
-"""T_MarketPlace URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 import main.views
@@ -20,4 +5,9 @@ import main.views
 urlpatterns = [
     path('',  main.views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('detail/market/<int:market_id>/',
+         main.views.market_detail, name='market_detail'),
+    path('detail/festival/<int:festival_id>/',
+         main.views.festival_detail, name='festival_detail'),
+    path('market/new/', main.views.market_new, name='market_new'),
 ]
