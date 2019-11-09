@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm
+
+import json
 # Create your views here
 
 
@@ -65,5 +68,16 @@ def market_new(req):
         marketform = MarketForm()
         return render(req, 'newMarket.html', {'marketform': marketform})
 
-def market_click_ajax_event(req, market_id):
-    return "good"
+def market_click_ajax_event(req):
+    market_id = req.POST.get('market_id')
+    market = Market.objects.get(id=market_id)
+    print('##############',market.longitude)
+    res = { 'message':'success',
+            'name':market.name,
+            'photo':market.photo.url,
+            'open_day':market.open_day,
+            'address':market.address,
+            'latitude':market.latitude,
+            'longitude':market.longitude}
+    res = json.dumps(res)
+    return HttpResponse(res)
