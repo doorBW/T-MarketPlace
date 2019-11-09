@@ -23,11 +23,7 @@ class Migration(migrations.Migration):
             name='Market',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-<<<<<<< HEAD
                 ('author', models.CharField(max_length=20)),
-=======
-                ('author', models.CharField(default='System', max_length=20)),
->>>>>>> 5bb3ebe17de3c399eb072f286a50695304013637
                 ('name', models.CharField(max_length=100)),
                 ('photo', models.ImageField(default='../media/images/markets.png', upload_to='images/')),
                 ('address', models.CharField(max_length=1000)),
