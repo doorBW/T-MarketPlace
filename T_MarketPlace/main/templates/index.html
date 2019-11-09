@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Martine</title>
-    <link rel="icon" href="{% static 'service/img/favicon.png' %}">
+    <link rel="icon" href="{% static 'main/img/favicon.png' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
     <!-- flaticon CSS -->
@@ -159,8 +159,16 @@
     }
     .event_slider_content {
         border-radius: 25px;
+        padding: 22px !important;
     }
 
+    .event_slider_content > img {
+        width: 64% !important;
+        margin: 0 auto;
+    }
+    .section_padding {
+        padding: 2vw 0px;
+    }
 
     /* 스냅 스크롤 */
     .scroll_container {
@@ -398,7 +406,7 @@
                         {% for festival in festivals %}
                         <div class="single_event_slider">
                             <div class="row justify-content-end">
-                                <div class="col-lg-6 col-md-6">
+                                <div class="col-lg-5 col-md-5">
                                     <div class="event_slider_content">
                                         <img src="{{festival.photo.url}}">
                                         <h5>{{festival.name}}</h5>

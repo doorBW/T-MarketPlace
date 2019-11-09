@@ -1,0 +1,82 @@
+@font-face { font-family: 'TmonMonsori'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: '국립박물관문화재단클래식B'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+/* 네비게이션 바 */
+.auth_user {
+    margin: 1vw;
+}
+
+/* 슬라이더 스타일 */
+
+.event_slider_content {
+    border-radius: 25px;
+    padding: 1.5vw !important;
+}
+
+.event_slider_content > img {
+    margin: 0 auto;
+}
+
+.event_slider_content.evt-desc-wrapper > .evt-name  {
+    font-family: 'TmonMonsori';
+    text-align:center;
+    font-size: 2.5vw;
+    margin: 1.8vw;
+    line-height: 2.5vw;
+    margin-bottom: 1.3vw;
+}
+
+.event_slider_content.evt-desc-wrapper > .evt-location {
+    font-weight: 800;
+    font-size: 1.5vw;
+    color: #ff4200;
+}
+
+.event_slider_content.evt-desc-wrapper > .evt-desc {
+    font-size: 1vw;
+    overflow: auto;
+    max-height: 10vw;
+}
+
+.event_slider_content.evt-desc-wrapper > .evt-date {
+    font-size: 1vw;
+    margin-bottom: 0.2vw;
+}
+
+.event_slider_content.evt-desc-wrapper > .evt-pay {
+    font-size: 1vw;
+    margin-bottom: 0.2vw;
+}
+.event_slider_content.evt-desc-wrapper > .evt-host {
+    font-size: 1vw;
+
+}
+.section_padding {
+    padding: 2vw 0px;
+}
+
+.event_part .event_slider_content p {
+color: #848484;
+max-height: 7vw;
+}
+
+.event_part .event_slider_content h2 {
+font-weight: 700;
+margin-bottom: 0px !important;
+}
+/* 스냅 스크롤 */
+.scroll_container {
+    overflow: auto;
+    scroll-snap-type: y mandatory;
+}
+.scroll_snap {
+    scroll-snap-align: start;
+}
+.scroll_container,
+.scroll_snap {
+    height: 42vw;
+    min-height: 530px;
+}
+.footer-area {
+    scroll-snap-align: end;
+}
