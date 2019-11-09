@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Market, Festival
 
-# Register your models here.
+myModels = [Market, Festival]
+admin.site.register(myModels)
