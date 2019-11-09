@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="{% static 'main/css/owl.carousel.min.css' %}">
     <!-- themify CSS -->
     <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
-
+    <!-- slider CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/maincontent.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <!-- for naver map api-->
@@ -115,6 +116,13 @@
     </script>
 
     <style>
+    /* 슬라이드 배경 */
+    .event_part {
+    background-image: url(static/main/img/loginimg.jpg);
+    }
+
+
+    /* 결과 화면 */
     .center_for_gif {
         position:absolute;
         top:50%; left:50%; width:100px; height:100px;
@@ -153,39 +161,7 @@
         padding-right:25px;
         visibility:hidden;
     }
-    /* 슬라이더 스타일 */
-    .event_part {
-        background-image: url(static/main/img/loginimg.jpg);
-    }
-    .event_slider_content {
-        border-radius: 25px;
-        padding: 22px !important;
-    }
-
-    .event_slider_content > img {
-        width: 64% !important;
-        margin: 0 auto;
-    }
-    .section_padding {
-        padding: 2vw 0px;
-    }
-
-    /* 스냅 스크롤 */
-    .scroll_container {
-        overflow: auto;
-        scroll-snap-type: y mandatory;
-    }
-    .scroll_snap {
-        scroll-snap-align: start;
-    }
-    .scroll_container,
-    .scroll_snap {
-        height: 42vw;
-        min-height: 530px;
-    }
-    .footer-area {
-        scroll-snap-align: end;
-    }
+    
     /* 검색 css */
     .search_list_each_div{
         cursor: pointer;
@@ -245,7 +221,7 @@
                             <a href="#"><i class="flaticon-twitter"></i></a>
                             <a href="#"><i class="flaticon-skype"></i></a>
                             <a href="#"><i class="flaticon-instagram"></i></a>
-                            <span><i class="flaticon-phone-call"></i>{{user.username}}</a></span>
+                            <span><i class="flaticon-phone-call"></i></a></span>
                         </div>
                     </div>
                 </div>
@@ -310,7 +286,22 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="auth_user">
+                                {{user.username}}
+                            </div>
+                            {% if user.is_authenticated %}
+                            <a href='#'>
+                                <div class="auth_user btn_2 btn-primary">
+                                    글 작성하기
+                                </div>
+                            </a>
+                            {% else %}
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="btn_1 d-none d-lg-block">로그아웃</a>
+                            {% else %}
                             <a href="{% url 'login' %}" class="btn_1 d-none d-lg-block">관리자 로그인</a>
+                            {% endif %}
                         </nav>
                     </div>
                 </div>
@@ -407,15 +398,16 @@
                         <div class="single_event_slider">
                             <div class="row justify-content-end">
                                 <div class="col-lg-5 col-md-5">
-                                    <div class="event_slider_content">
+                                    <div class="event_slider_content evt-desc-wrapper">
                                         <img src="{{festival.photo.url}}">
-                                        <h5>{{festival.name}}</h5>
-                                        <h2>위치</h2>
-                                        <p>{{festival.content}}
+                                        <p class='evt-name'><{{festival.name}}></p>
+                                        <p class='evt-location'>위치:{{festival.address}}</p>
+                                        <p class='evt-desc'>
+                                            {{festival.summary}}...
                                         </p>
-                                        <p>날짜: <span>{{festival.date}}</span> </p>
-                                        <p>금액: <span>{{festival.pay}}</span> </p>
-                                        <p>주최자: <span> {{festival.host}}</span> </p>
+                                        <p class='evt-date'>날짜: <span>{{festival.date}}</span> </p>
+                                        <p class='evt-pay'>금액: <span>{{festival.pay}}</span> </p>
+                                        <p class='evt-host'>주최자: <span> {{festival.host}}</span> </p>
                                         <!-- <div class="rating">
                                             <span>Rating:</span>
                                             <div class="place_review">
