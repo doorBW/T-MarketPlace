@@ -7,10 +7,14 @@ from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
+<<<<<<< HEAD
+import json
+=======
 
 import json
 import requests
 from time import sleep
+>>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 # Create your views here
 
 # 메인 페이지
@@ -71,15 +75,13 @@ def festival_detail(req, festival_id):
 
 def market_new(req):
     if req.method == 'POST':
-        form = MarketForm(req.POST, req.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.created_at = timezone.now()
-            post.save()
-            return redirect('index')
+        mk = Market(name=req.POST['name'], address=req.POST['address'], latitude=req.POST['latitude'],
+                    longitude=req.POST['longitude'], url=req.POST['url'], open_day=req.POST['open_day'], content=req.POST['content'])
+        mk.photo = req.FILES['photo']
+        mk.save()
+        return redirect('index')
     else:
-        form = MarketForm()
-        return render(req, 'newMarket.html', {'form': form})
+        return render(req, 'newMarket.html')
 
 
 def festival_new(req):
@@ -94,18 +96,23 @@ def festival_new(req):
         form = FestivalForm()
         return render(req, 'newFestival.html', {'form': form})
 
+<<<<<<< HEAD
+
+=======
 # 메인 페이지 지도랑 사진 ajax
+>>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 def market_click_ajax_event(req):
     sleep(2)
     market_id = req.POST.get('market_id')
     market = Market.objects.get(id=market_id)
-    res = { 'message':'success',
-            'name':market.name,
-            'photo':market.photo.url,
-            'open_day':market.open_day,
-            'address':market.address,
-            'latitude':market.latitude,
-            'longitude':market.longitude}
+    print('##############', market.longitude)
+    res = {'message': 'success',
+           'name': market.name,
+           'photo': market.photo.url,
+           'open_day': market.open_day,
+           'address': market.address,
+           'latitude': market.latitude,
+           'longitude': market.longitude}
     res = json.dumps(res)
     return HttpResponse(res)
 

@@ -131,12 +131,14 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <div class="event_slider_content">
-                                <h2>{{market.user}}</h2>
-                                <p>{{market.content}}</p>
-                                <p>date: <span>{{market.created_at}}</span> </p>
-                                <p>Cost: <span>Start from $820</span> </p>
-                                <p>Organizer: <span> Martine Agency</span> </p>
+                            <div class="event_slider_content">                                
+                                <h1>{{market.name}}</h1>
+                                <h5>작성자 : {{market.user}}</h5>
+                                <h5>주소 : {{market.address}}</h5>
+                                <h5>url : {{market.url}}</h5>
+                                <h>열리는날 : {{market.open_day}}</h>
+                                <p>소개 : {{market.content}}</p>
+                                <p>작성일 : <span>{{market.created_at}}</span> </p>
                             </div>
                         </div>
                     </div>
