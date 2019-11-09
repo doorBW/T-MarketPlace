@@ -9,6 +9,8 @@ from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
 
 import json
+import requests
+from time import sleep
 # Create your views here
 
 # 메인 페이지
@@ -94,9 +96,9 @@ def festival_new(req):
 
 # 메인 페이지 지도랑 사진 ajax
 def market_click_ajax_event(req):
+    sleep(2)
     market_id = req.POST.get('market_id')
     market = Market.objects.get(id=market_id)
-    print('##############',market.longitude)
     res = { 'message':'success',
             'name':market.name,
             'photo':market.photo.url,
@@ -106,3 +108,27 @@ def market_click_ajax_event(req):
             'longitude':market.longitude}
     res = json.dumps(res)
     return HttpResponse(res)
+
+def auto_market_data_saving(req):
+    data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
+    post_res = requests(data_url)
+    datas = post_res["DATA"]
+    insert_cnt = 0
+    for data in datas:
+        markets = Market.objects.filter(name=data["m_name"])
+        if len(markets) > 0:
+            continue
+        else:
+            new_market = Market()
+            new_market.name = data["m_name"]
+            new_market.address = data["guname"]+" "+data["m_addr"]
+            new_market.latitude = data["lng"]
+            new_market.longitude = data["lat"]
+            new_market.save()
+            insert_cnt += 1
+    if insert_cnt > 0:
+        message = str(insert_cnt)+'개의 데이터를 정상적으로 추가하였습니다.' 
+    else:
+        message = "추가된 데이터가 없습니다."
+    result_res = { 'message': message}
+    return result_res

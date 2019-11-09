@@ -32,7 +32,8 @@
 
     <script>
         $(document).ready(function(){
-
+            $('#map_finder').hide(); //ajax종료시 로딩바를 숨겨준다.
+            $('#input_data').hide(); //ajax종료시 로딩바를 숨겨준다.
             $('a[href="#"]').click(function(e) {
                 e.preventDefault();
             });
@@ -64,9 +65,19 @@
 
     </script>
     <script>
+        function mapFinderStart(){
+            // $('.new_banner_part').hide()
+            $('#map_finder').toggle(); //ajax실행시 로딩바를 보여준다.
+            // $('.new_banner_part').show()
+        };
+
+        function mapFinderEnd(){
+            $('#map_finder').toggle(); //ajax종료시 로딩바를 숨겨준다.
+        };
+
         function search_enter(){
             console.log("SEARCH ENTER!")
-        }
+        };
 
         // market over&out event
         function search_list_each_mouse_over(e){
@@ -78,23 +89,18 @@
 
         // marketClickEvent
         function marketClickEvent(market_id){
-            console.log(market_id)
             $.ajax({
                 type: "POST",
                 url: "{% url 'market_click_ajax_event' %}",
                 data: {'market_id': market_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
                 dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
-                // 서버측에서 전송한 Response 데이터 형식 (json)
-                // {'likes_count': post.like_count, 'message': message }
-                success: function(res){ // 통신 성공시 - 좋아요 갯수 변경, 유저 목록 변경
-                    // $("#count-"+pk).html(response.like_count+"개");
-                    // var users = $("#like-user-"+pk).text();
-                    // if(users.indexOf(response.nickname) != -1){
-                    // $("#like-user-"+pk).text(users.replace(response.nickname, ""));
-                    // }else{
-                    // $("#like-user-"+pk).text(response.nickname+users);
-                    // }
-                    
+                beforeSend: function () {
+                    mapFinderStart(); //로딩바 생성
+                },
+                complete: function () {
+                    mapFinderEnd(); //로딩바 제거
+                },
+                success: function(res){ 
                     var latlng = new naver.maps.LatLng(parseFloat(res.latitude), parseFloat(res.longitude));
                     first_marker.setPosition(latlng);
                     $('#result_market_name').text(res.name);
@@ -103,13 +109,20 @@
                 error: function(request, status, error){ // 통신 실패시 - 로그인 페이지 리다이렉트
                     alert("예기치 못한 5류가 발생하였습니다 :'( ")
                     window.location.replace("")
-                    //  alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
             })
         }
     </script>
 
     <style>
+    .center_for_gif {
+        position:absolute;
+        top:50%; left:50%; width:100px; height:100px;
+        overflow:hidden;
+        opacity: 1;
+        z-index: 999;
+    }
+
     .result_img_div{
         height: 100%;
     }
@@ -198,6 +211,13 @@
 </head>
 
 <body>
+    <!-- for gif -->
+    <div id="map_finder" class="center_for_gif">
+        <img src="{% static 'main/img/map_finder.gif' %}" alt="">
+    </div>
+    <div id="input_data" class="center_for_gif">
+        <img src="{% static 'main/img/map_finder.gif' %}" alt="">
+    </div>
    <!--::header part start::-->
    <header class="main_menu">
         <div class="sub_menu">
