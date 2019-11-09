@@ -7,26 +7,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Martine</title>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="{% static 'service/img/favicon.png' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{% static 'main/css/animate.css' %}">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/owl.carousel.min.css' %}">
     <!-- themify CSS -->
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
     <!-- flaticon CSS -->
     <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
     <!-- fontawesome CSS -->
-    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'main/fontawesome/css/all.min.css' %}">
     <!-- magnific CSS -->
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/gijgo.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/gijgo.min.css' %}">
     <!-- niceselect CSS -->
-    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="{% static 'main/css/nice-select.css' %}">
     <!-- slick CSS -->
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="{% static 'main/css/slick.css' %}">
     <!-- style CSS -->
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
@@ -51,7 +51,7 @@
                             <a href="#"><i class="flaticon-twitter"></i></a>
                             <a href="#"><i class="flaticon-skype"></i></a>
                             <a href="#"><i class="flaticon-instagram"></i></a>
-                            <span><i class="flaticon-phone-call"></i>+880 356 257 142</a></span>
+                            <span><i class="flaticon-phone-call"></i>{{user.username}}</a></span>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a href="#" class="btn_1 d-none d-lg-block">book now</a>
+                            <a href="{% url 'login' %}" class="btn_1 d-none d-lg-block">관리자 로그인</a>
                         </nav>
                     </div>
                 </div>
@@ -773,28 +773,28 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- footer part end-->
 
     <!-- jquery plugins here-->
-    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="{% static 'main/js/jquery-1.12.1.min.js' %}"></script>
     <!-- popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="{% static 'main/js/popper.min.js' %}"></script>
     <!-- bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
     <!-- magnific js -->
-    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="{% static 'main/js/jquery.magnific-popup.js' %}"></script>
     <!-- swiper js -->
-    <script src="js/owl.carousel.min.js"></script>
+    <script src="{% static 'main/js/owl.carousel.min.js' %}"></script>
     <!-- masonry js -->
-    <script src="js/masonry.pkgd.js"></script>
+    <script src="{% static 'main/js/masonry.pkgd.js' %}"></script>
     <!-- masonry js -->
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/gijgo.min.js"></script>
+    <script src="{% static 'main/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'main/js/gijgo.min.js' %}"></script>
     <!-- contact js -->
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
-    <script src="js/contact.js"></script>
+    <script src="{% static 'main/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'main/js/jquery.form.js' %}"></script>
+    <script src="{% static 'main/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'main/js/mail-script.js' %}"></script>
+    <script src="{% static 'main/js/contact.js' %}"></script>
     <!-- custom js -->
-    <script src="js/custom.js"></script>
+    <script src="{% static 'main/js/custom.js' %}"></script>
 </body>
 
 </html>
