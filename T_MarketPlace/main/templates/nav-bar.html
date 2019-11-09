@@ -53,9 +53,9 @@
                             {{user.username}}
                         </div>
                         {% if user.is_authenticated %}
-                        <a href='#'>
+                        <a href='javascript:auto_data_update();'>
                             <div class="auth_user btn_2 btn-primary">
-                                글 작성하기
+                                데이터 자동 업데이트
                             </div>
                         </a>
                         {% else %}
