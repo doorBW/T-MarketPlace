@@ -32,6 +32,11 @@
 
     <script>
         $(document).ready(function(){
+
+            $('a[href="#"]').click(function(e) {
+                e.preventDefault();
+            });
+
             $('#market_search_input').focus(function(){
                 $('#market_search_input_box_div').css('background-color','white');
                 $('#market_search_input_box_div').css('border','1px solid #0475f4');
@@ -52,11 +57,77 @@
                 //need if login when input value exist
                 $('#market_search_input').attr('placeholder','검색하고자 하는 키워드를 입력해주세요.');
             })
+
+            
+
         })
 
     </script>
+    <script>
+        function search_enter(){
+            console.log("SEARCH ENTER!")
+        }
+
+        // market over&out event
+        function search_list_each_mouse_over(e){
+            e.style.fontWeight = "bold";
+        }
+        function search_list_each_mouse_out(e){
+            e.style.fontWeight = "normal";
+        }
+
+        // marketClickEvent
+        function marketClickEvent(market_id){
+            console.log(market_id)
+            $.ajax({
+                type: "POST",
+                url: "{% url 'market_click_ajax_event' %}",
+                data: {'market_id': market_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+                dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+                // 서버측에서 전송한 Response 데이터 형식 (json)
+                // {'likes_count': post.like_count, 'message': message }
+                success: function(res){ // 통신 성공시 - 좋아요 갯수 변경, 유저 목록 변경
+                    // $("#count-"+pk).html(response.like_count+"개");
+                    // var users = $("#like-user-"+pk).text();
+                    // if(users.indexOf(response.nickname) != -1){
+                    // $("#like-user-"+pk).text(users.replace(response.nickname, ""));
+                    // }else{
+                    // $("#like-user-"+pk).text(response.nickname+users);
+                    // }
+                    
+                    var latlng = new naver.maps.LatLng(parseFloat(res.latitude), parseFloat(res.longitude));
+                    first_marker.setPosition(latlng);
+                    $('#result_market_name').text(res.name);
+                    $('#result_img').attr('src',res.photo);
+                },
+                error: function(request, status, error){ // 통신 실패시 - 로그인 페이지 리다이렉트
+                    alert("예기치 못한 5류가 발생하였습니다 :'( ")
+                    window.location.replace("")
+                    //  alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                },
+            })
+        }
+    </script>
 
     <style>
+    .result_img_div{
+        height: 100%;
+    }
+
+    .result_market_name{
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .result_img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 75%;
+        width: auto;
+    }
+
     .search_button{
         background: url("{% static 'main/img/loupe.png' %}") no-repeat;
         background-size: 21px;
@@ -76,6 +147,8 @@
     .event_slider_content {
         border-radius: 25px;
     }
+
+
     /* 스냅 스크롤 */
     .scroll_container {
         overflow: auto;
@@ -92,6 +165,35 @@
     .footer-area {
         scroll-snap-align: end;
     }
+    /* 검색 css */
+    .search_list_each_div{
+        cursor: pointer;
+        display: table;
+    }
+
+    .search_list_each_icon{
+        display: table-cell;
+        width: 22px;
+        height: 22px;
+        background-image: url("{% static 'main/img/placeholder.png' %}");
+        background-repeat: no-repeat;
+        background-size: 22px;
+        vertical-align: middle;
+    }
+
+    .search_list_each_text{
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 16px;
+        line-height: 11px;
+    }
+
+    .search_list_each_address{
+        font-size: 13px;
+        color: gray;
+    }
+    
+
     </style>
 </head>
 
@@ -156,7 +258,7 @@
                                             {% for festival in festivals %}
                                             <a class="dropdown-item" href="{% url 'festival_detail' festival.id %}">festival</a>
                                             {% endfor %}
-                                            <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                                            <a class="dropdown-item" href="{% url 'festival_new' %}">올리기</a>
                                         </div>
                                     </li>
                                     <li class="nav-item dropdown">
@@ -231,17 +333,32 @@
                 <div class="col-lg-4 search_and_result_div">
                     <div class="result_div">
                         <div class="result_img_div">
+                            <p id="result_market_name" class="result_market_name">시장 이름</p>
+                            <a id="result_market_a" href="#"><img id="result_img" src="" alt="" class="result_img"></a>
 
                         </div>
                     </div>
                     <div class="search_div">
                         <div class="search_input_box_div" id="market_search_input_box_div">
-                            <input type="text" class="search_input" id="market_search_input" name="market_search_input" placeholder="검색하고자 하는 키워드를 입력해주세요.">
+                            <input type="text" class="search_input" id="market_search_input" name="market_search_input" placeholder="검색하고자 하는 키워드를 입력해주세요." onkeyup="search_enter();"> 
                             <input type="button" class="search_button">
                         </div>
 
                         <div class="search_list_div">
-                        
+                            <ul>
+                            {% for market in markets %}
+                                <li onmouseover="search_list_each_mouse_over(this)" onmouseout="search_list_each_mouse_out(this)">
+                                    <div id="market_{{market.id}}" name="market_{{market.id}}" class="search_list_each_div" onclick="marketClickEvent({{ market.id }})">
+                                        <span class="search_list_each_icon"></span>
+                                        <div>
+                                            <span class="search_list_each_text">&nbsp&nbsp{{ market.name }} (상시)</span>
+                                            &nbsp&nbsp&nbsp<span class="search_list_each_address">우리집</span>
+                                        </div>
+                                    </div>
+                                    
+                                </li>
+                            {% endfor %}
+                            </ul>
                         </div>
 
                     </div>
@@ -263,13 +380,14 @@
                             <div class="row justify-content-end">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="event_slider_content">
+                                        <img src="{{festival.photo.url}}">
                                         <h5>{{festival.name}}</h5>
                                         <h2>위치</h2>
                                         <p>{{festival.content}}
                                         </p>
-                                        <p>날짜: <span>12 Aug 2019</span> </p>
-                                        <p>금액: <span>Start from $820</span> </p>
-                                        <p>주최자: <span> Martine Agency</span> </p>
+                                        <p>날짜: <span>{{festival.date}}</span> </p>
+                                        <p>금액: <span>{{festival.pay}}</span> </p>
+                                        <p>주최자: <span> {{festival.host}}</span> </p>
                                         <!-- <div class="rating">
                                             <span>Rating:</span>
                                             <div class="place_review">

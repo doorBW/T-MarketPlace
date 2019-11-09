@@ -4,7 +4,9 @@ from django.contrib import auth
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Market, Festival, Profile
-from .forms import MarketForm
+from django.http import HttpResponse
+from .forms import MarketForm, FestivalForm
+import json
 # Create your views here
 
 # 메인 페이지
@@ -30,6 +32,7 @@ def signup(request):
             return redirect('index')
     return render(request, './signup.html')
 
+
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -44,6 +47,7 @@ def login(request):
     else:
         return render(request, 'login.html')
     return render(request, 'login.html')
+
 
 def logout(request):
     auth.logout(request)
@@ -63,12 +67,40 @@ def festival_detail(req, festival_id):
 
 def market_new(req):
     if req.method == 'POST':
-        marketform = MarketForm(req.POST)
-        if marketform.is_valid():
+        form = MarketForm(req.POST, req.FILES)
+        if form.is_valid():
             post = form.save(commit=False)
-            post.pub_date = timezone.now()
+            post.created_at = timezone.now()
             post.save()
             return redirect('index')
     else:
-        marketform = MarketForm()
-        return render(req, 'newMarket.html', {'marketform': marketform})
+        form = MarketForm()
+        return render(req, 'newMarket.html', {'form': form})
+
+
+def festival_new(req):
+    if req.method == 'POST':
+        form = FestivalForm(req.POST, req.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.created_at = timezone.now()
+            post.save()
+            return redirect('index')
+    else:
+        form = FestivalForm()
+        return render(req, 'newFestival.html', {'form': form})
+
+# 메인 페이지 지도랑 사진 ajax
+def market_click_ajax_event(req):
+    market_id = req.POST.get('market_id')
+    market = Market.objects.get(id=market_id)
+    print('##############',market.longitude)
+    res = { 'message':'success',
+            'name':market.name,
+            'photo':market.photo.url,
+            'open_day':market.open_day,
+            'address':market.address,
+            'latitude':market.latitude,
+            'longitude':market.longitude}
+    res = json.dumps(res)
+    return HttpResponse(res)
