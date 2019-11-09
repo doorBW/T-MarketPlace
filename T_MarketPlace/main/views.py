@@ -3,26 +3,40 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
+<<<<<<< HEAD
 import json
+=======
+
+import json
+import requests
+from time import sleep
+>>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 # Create your views here
 
-
+# 메인 페이지
 def index(req):
     markets = Market.objects.all()
     festivals = Festival.objects.all()
     return render(req, 'index.html', {'markets': markets, 'festivals': festivals})
-
-
+# 로그인 기능
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
-            user = User.objects.create_user(
-                request.POST['username'], password=request.POST['password1'])
-            auth.login(request, user)
+            user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+            # profile_data 저장
+            new_profile = Profile()
+            new_profile.user = user 
+            new_profile.upload_date = timezone.datetime.now()
+            new_profile.image = request.FILES['img1']
+            new_profile.files = request.FILES['file1']
+            new_profile.save()
+            # 유저 아이디 및 비밀번호 저장
             user.save()
+            auth.login(request, user)
             return redirect('index')
     return render(request, './signup.html')
 
@@ -48,6 +62,7 @@ def logout(request):
     return redirect('index')
 
 
+# 시장 및 축제 페이지
 def market_detail(req, market_id):
     market_detail = get_object_or_404(Market, pk=market_id)
     return render(req, 'market_detail.html', {'market': market_detail})
@@ -81,8 +96,13 @@ def festival_new(req):
         form = FestivalForm()
         return render(req, 'newFestival.html', {'form': form})
 
+<<<<<<< HEAD
 
+=======
+# 메인 페이지 지도랑 사진 ajax
+>>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 def market_click_ajax_event(req):
+    sleep(2)
     market_id = req.POST.get('market_id')
     market = Market.objects.get(id=market_id)
     print('##############', market.longitude)
@@ -95,3 +115,27 @@ def market_click_ajax_event(req):
            'longitude': market.longitude}
     res = json.dumps(res)
     return HttpResponse(res)
+
+def auto_market_data_saving(req):
+    data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
+    post_res = requests(data_url)
+    datas = post_res["DATA"]
+    insert_cnt = 0
+    for data in datas:
+        markets = Market.objects.filter(name=data["m_name"])
+        if len(markets) > 0:
+            continue
+        else:
+            new_market = Market()
+            new_market.name = data["m_name"]
+            new_market.address = data["guname"]+" "+data["m_addr"]
+            new_market.latitude = data["lng"]
+            new_market.longitude = data["lat"]
+            new_market.save()
+            insert_cnt += 1
+    if insert_cnt > 0:
+        message = str(insert_cnt)+'개의 데이터를 정상적으로 추가하였습니다.' 
+    else:
+        message = "추가된 데이터가 없습니다."
+    result_res = { 'message': message}
+    return result_res

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Market, Festival
+from .models import Market, Festival, Profile
 
-myModels = [Market, Festival]
+myModels = [Market, Festival, Profile]
 admin.site.register(myModels)
