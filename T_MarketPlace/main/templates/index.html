@@ -10,25 +10,62 @@
     <link rel="icon" href="{% static 'service/img/favicon.png' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
-    <!-- animate CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/animate.css' %}">
-    <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/owl.carousel.min.css' %}">
-    <!-- themify CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/themify-icons.css' %}">
     <!-- flaticon CSS -->
     <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
-    <!-- fontawesome CSS -->
-    <link rel="stylesheet" href="{% static 'main/fontawesome/css/all.min.css' %}">
-    <!-- magnific CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/gijgo.min.css' %}">
-    <!-- niceselect CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/nice-select.css' %}">
-    <!-- slick CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/slick.css' %}">
     <!-- style CSS -->
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/index_style.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- for naver map api-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">  
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=otxkvltnrz"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#market_search_input').focus(function(){
+                $('#market_search_input_box_div').css('background-color','white');
+                $('#market_search_input_box_div').css('border','1px solid #0475f4');
+                $('#market_search_input_box_div').css('box-shadow','0 0 0 3px rgba(4,117,244,.2)');
+                $('#market_search_input').css('background-color','white');
+                $('#market_search_input').css('width','80%');
+                $('#market_search_input').attr('placeholder','');
+                $('.search_button').css('visibility','visible')
+
+            })
+            $('#market_search_input').blur(function(){
+                $('#market_search_input_box_div').css('background-color','#f2f2f2');
+                $('#market_search_input_box_div').css('border','0');
+                $('#market_search_input_box_div').css('box-shadow','');
+                $('#market_search_input').css('background-color','#f2f2f2');
+                $('#market_search_input').css('width','100%');
+                $('.search_button').css('visibility','hidden')
+                //need if login when input value exist
+                $('#market_search_input').attr('placeholder','검색하고자 하는 키워드를 입력해주세요.');
+            })
+        })
+
+    </script>
+
+    <style>
+    .search_button{
+        background: url("{% static 'main/img/loupe.png' %}") no-repeat;
+        background-size: 21px;
+        border: none;
+        width: 21px;
+        height: 21px;
+        cursor: pointer;
+        float: right;
+        margin-top:3px;
+        padding-right:25px;
+        visibility:hidden;
+    }
+    </style>
 </head>
 
 <body>
@@ -88,7 +125,10 @@
                                             Blog
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="blog.html">Blog</a>
+                                            
+                                            {% for festival in festivals %}
+                                            <a class="dropdown-item" href="{% url 'festival_detail' festival.id %}">festival</a>
+                                            {% endfor %}
                                             <a class="dropdown-item" href="single-blog.html">Single blog</a>
                                         </div>
                                     </li>
@@ -98,11 +138,15 @@
                                             aria-expanded="false">
                                             pages
                                         </a>
+                                        
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
                                             <a class="dropdown-item" href="top_place.html">top place</a>
-                                            <a class="dropdown-item" href="tour_details.html">tour details</a>
-                                            <a class="dropdown-item" href="elements.html">Elements</a>
+                                            {% for market in markets %}
+                                            <a class="dropdown-item" href="{% url 'market_detail' market.id %}">market</a>
+                                            {% endfor %}
+                                            <a class="dropdown-item" href="{% url 'market_new' %}">올리기</a>
                                         </div>
+                                        
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html">Contact</a>
@@ -119,16 +163,59 @@
     <!-- Header part end-->
 
     <!-- banner part start-->
-    <section class="banner_part">
-        <div class="container">
+    <section class="banner_part new_banner_part">
+        <div class="container new_container">
             <div class="row align-items-center justify-content-center">
-                <div class="col-lg-10">
+                <!-- naver map div -->
+                <div class="col-lg-8 naver_map_div">
+                    <!-- 
                     <div class="banner_text text-center">
                         <div class="banner_text_iner">
                             <h1> Saintmartine</h1>
                             <p>Let’s start your journey with us, your dream will come true</p>
                             <a href="#" class="btn_1">Discover Now</a>
                         </div>
+                    </div>
+                    -->
+                    <div id="map" style="width:100%;height:500px;"></div>
+
+                    <script>
+                    var map = {
+                        center: new naver.maps.LatLng(37.5666103, 126.9783882),
+                        zoom: 7
+                    };
+
+                    var market_map = new naver.maps.Map('map', map);
+
+                    // marker
+                    var first_marker = new naver.maps.Marker({
+                        position: new naver.maps.LatLng(37.5666103, 126.9783882),
+                        map: market_map
+                    });
+
+                    naver.maps.Event.addListener(first_marker, "click", function(e) {
+                        console.log("marker click!")
+                    });
+
+                    </script>
+                </div>
+                <!-- search and reulst div -->
+                <div class="col-lg-4 search_and_result_div">
+                    <div class="result_div">
+                        <div class="result_img_div">
+
+                        </div>
+                    </div>
+                    <div class="search_div">
+                        <div class="search_input_box_div" id="market_search_input_box_div">
+                            <input type="text" class="search_input" id="market_search_input" name="market_search_input" placeholder="검색하고자 하는 키워드를 입력해주세요.">
+                            <input type="button" class="search_button">
+                        </div>
+
+                        <div class="search_list_div">
+                        
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -137,7 +224,7 @@
     <!-- banner part start-->
 
     <!-- booking part start-->
-    <section class="booking_part">
+    <section class="booking_part new_booking_part">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -770,31 +857,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             </div>
         </div>
     </footer>
-    <!-- footer part end-->
-
-    <!-- jquery plugins here-->
-    <script src="{% static 'main/js/jquery-1.12.1.min.js' %}"></script>
-    <!-- popper js -->
-    <script src="{% static 'main/js/popper.min.js' %}"></script>
-    <!-- bootstrap js -->
-    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
-    <!-- magnific js -->
-    <script src="{% static 'main/js/jquery.magnific-popup.js' %}"></script>
-    <!-- swiper js -->
-    <script src="{% static 'main/js/owl.carousel.min.js' %}"></script>
-    <!-- masonry js -->
-    <script src="{% static 'main/js/masonry.pkgd.js' %}"></script>
-    <!-- masonry js -->
-    <script src="{% static 'main/js/jquery.nice-select.min.js' %}"></script>
-    <script src="{% static 'main/js/gijgo.min.js' %}"></script>
-    <!-- contact js -->
-    <script src="{% static 'main/js/jquery.ajaxchimp.min.js' %}"></script>
-    <script src="{% static 'main/js/jquery.form.js' %}"></script>
-    <script src="{% static 'main/js/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'main/js/mail-script.js' %}"></script>
-    <script src="{% static 'main/js/contact.js' %}"></script>
-    <!-- custom js -->
-    <script src="{% static 'main/js/custom.js' %}"></script>
 </body>
 
 </html>
