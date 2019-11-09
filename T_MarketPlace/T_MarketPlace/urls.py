@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 import main.views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('',  main.views.index, name='index'),
@@ -13,4 +15,8 @@ urlpatterns = [
          main.views.festival_detail, name='festival_detail'),
     path('market/new/', main.views.market_new, name='market_new'),
     path('festival/new/', main.views.festival_new, name='festival_new'),
+    path('market/ajax/', main.views.market_click_ajax_event,
+         name='market_click_ajax_event')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
