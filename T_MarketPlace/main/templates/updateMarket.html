@@ -16,14 +16,6 @@
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
     <!-- style CSS -->
     <link rel="stylesheet" href="{% static 'main/css/index_style.css' %}" />
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
     <style>
         .search_button {
@@ -126,28 +118,17 @@
             </div>
         </div>
     </header>
-
-
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="container">
                     <div class="container">
-
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="exampleInputEmail1">축제이름</label>
-                                <input name="name" type="text" class="form-control" id="exampleInputEmail1"
-                                    placeholder="festival">
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleInputEmail1">시장이름</label>
-                                <select name="market" class="form-control form-control-sm">
-                                    {% for market in markets%}
-                                    <option value="{{market.id}}">{{market.name}}</option>
-                                    {%endfor%}
-                                </select>
+                                <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="market">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">주소</label>
@@ -155,27 +136,25 @@
                                     placeholder="address">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">열리는날</label>
-                                <input name="date" type="text" class="form-control" id="exampleInputEmail1"
-                                    placeholder="date">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">개최자</label>
-                                <input name="host" type="text" class="form-control" id="exampleInputEmail1"
-                                    placeholder="host">
+                                <label for="exampleInputEmail1">위도</label>
+                                <input name="latitude" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="latitude">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">입장료</label>
-                                <input name="pay" type="text" class="form-control" id="exampleInputEmail1"
-                                    placeholder="pay">
+                                <label for="exampleInputEmail1">경도</label>
+                                <input name="longitude" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="longitude">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">url</label>
                                 <input name="url" type="text" class="form-control" id="exampleInputEmail1"
                                     placeholder="url">
                             </div>
-
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">열리는날</label>
+                                <input name="open_day" type="text" class="form-control" id="exampleInputEmail1"
+                                    placeholder="open day">
+                            </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">소개</label>
                                 <textarea name="content" class="form-control" rows="5" id="comment"
@@ -189,11 +168,12 @@
                             <br>
                         </form>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
+
 
 
 

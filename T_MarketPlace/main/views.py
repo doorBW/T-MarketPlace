@@ -1,3 +1,6 @@
+from time import sleep
+import requests
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -7,29 +10,27 @@ from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
-<<<<<<< HEAD
-import json
-=======
 
-import json
-import requests
-from time import sleep
->>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 # Create your views here
 
 # 메인 페이지
+
+
 def index(req):
     markets = Market.objects.all()
     festivals = Festival.objects.all()
     return render(req, 'index.html', {'markets': markets, 'festivals': festivals})
 # 로그인 기능
+
+
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
-            user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+            user = User.objects.create_user(
+                request.POST['username'], password=request.POST['password1'])
             # profile_data 저장
             new_profile = Profile()
-            new_profile.user = user 
+            new_profile.user = user
             new_profile.upload_date = timezone.datetime.now()
             new_profile.image = request.FILES['img1']
             new_profile.files = request.FILES['file1']
@@ -78,6 +79,10 @@ def market_new(req):
         mk = Market(name=req.POST['name'], address=req.POST['address'], latitude=req.POST['latitude'],
                     longitude=req.POST['longitude'], url=req.POST['url'], open_day=req.POST['open_day'], content=req.POST['content'])
         mk.photo = req.FILES['photo']
+        mk.created_at = timezone.now()
+        user = req.user.username
+        mk.author = user
+
         mk.save()
         return redirect('index')
     else:
@@ -85,22 +90,58 @@ def market_new(req):
 
 
 def festival_new(req):
+    markets = Market.objects.all()
     if req.method == 'POST':
-        form = FestivalForm(req.POST, req.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.created_at = timezone.now()
-            post.save()
-            return redirect('index')
+        fest = Festival(name=req.POST['name'], date=req.POST['date'], pay=req.POST['pay'],
+                        host=req.POST['host'], address=req.POST['address'], url=req.POST['url'], content=req.POST['content'])
+        fest.photo = req.FILES['photo']
+        market = Market.objects.get(id=req.POST['market'])
+        fest.market = market
+        fest.created_at = timezone.now()
+        fest.save()
+        return redirect('index')
     else:
-        form = FestivalForm()
-        return render(req, 'newFestival.html', {'form': form})
+        return render(req, 'newFestival.html', {'markets': markets})
 
-<<<<<<< HEAD
 
-=======
+def market_update(req, market_id):
+    #mk = Market.objects.get(pk=market_id)
+    mk = get_object_or_404(Market, pk=market_id)
+    if req.method == 'POST':
+        mk.name = req.POST['name']
+        mk.address = req.POST['address']
+        mk.latitude = req.POST['latitude']
+        mk.longitude = req.POST['longitude']
+        mk.url = req.POST['url']
+        mk.open_day = req.POST['open_day']
+        mk.content = req.POST['content']
+        mk.photo = req.FILES['photo']
+        mk.created_at = timezone.now()
+        user = req.user.username
+        mk.author = user
+        mk.save()
+        return redirect('/detail/+int(market.pk)')
+    else:
+        return render(req, 'updateMarket.html')
+
+
+def festival_update(req, festival_id):
+    markets = Market.objects.all()
+    festival = get_object_or_404(Festival, pk=festival_id)
+    if req.method == "POST":
+        fest = Festival(name=req.POST['name'], date=req.POST['date'], pay=req.POST['pay'],
+                        host=req.POST['host'], address=req.POST['address'], url=req.POST['url'], content=req.POST['content'])
+        fest.photo = req.FILES['photo']
+        market = Market.objects.get(id=req.POST['market'])
+        fest.market = market
+        fest.created_at = timezone.now()
+        fest.save()
+        return redirect('/detail/+int(festival.pk)')
+    else:
+        return render(req, 'updateFestival.html', {'markets': markets})
+
+
 # 메인 페이지 지도랑 사진 ajax
->>>>>>> e08dff41d1303e01ff12c91ad63b81d2c1765db9
 def market_click_ajax_event(req):
     sleep(2)
     market_id = req.POST.get('market_id')
@@ -115,6 +156,7 @@ def market_click_ajax_event(req):
            'longitude': market.longitude}
     res = json.dumps(res)
     return HttpResponse(res)
+
 
 def auto_market_data_saving(req):
     data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
@@ -134,8 +176,8 @@ def auto_market_data_saving(req):
             new_market.save()
             insert_cnt += 1
     if insert_cnt > 0:
-        message = str(insert_cnt)+'개의 데이터를 정상적으로 추가하였습니다.' 
+        message = str(insert_cnt)+'개의 데이터를 정상적으로 추가하였습니다.'
     else:
         message = "추가된 데이터가 없습니다."
-    result_res = { 'message': message}
+    result_res = {'message': message}
     return result_res

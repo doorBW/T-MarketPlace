@@ -133,12 +133,15 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="event_slider_content">                                
                                 <h1>{{market.name}}</h1>
-                                <h5>작성자 : {{market.user}}</h5>
+                                <h5>작성자 : {{market.author}}</h5>
                                 <h5>주소 : {{market.address}}</h5>
                                 <h5>url : {{market.url}}</h5>
-                                <h>열리는날 : {{market.open_day}}</h>
+                                <h5>열리는날 : {{market.open_day}}</h5>
                                 <p>소개 : {{market.content}}</p>
                                 <p>작성일 : <span>{{market.created_at}}</span> </p>
+                                <div class="tour_details_content_btn">
+                                        <a href="{% url 'market_update' market.id %}" class="btn_1">수정</a>
+                                    </div>
                             </div>
                         </div>
                     </div>
