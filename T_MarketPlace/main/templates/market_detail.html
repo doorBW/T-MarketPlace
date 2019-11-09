@@ -2,35 +2,35 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Martine</title>
-        <link rel="icon" href="img/favicon.png">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
-        <!-- animate CSS -->
-        <link rel="stylesheet" href="css/animate.css">
-        <!-- owl carousel CSS -->
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <!-- themify CSS -->
-        <link rel="stylesheet" href="css/themify-icons.css">
-        <!-- flaticon CSS -->
-        <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
-        <!-- fontawesome CSS -->
-        <link rel="stylesheet" href="fontawesome/css/all.min.css">
-        <!-- magnific CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/gijgo.min.css">
-        <!-- niceselect CSS -->
-        <link rel="stylesheet" href="css/nice-select.css">
-        <!-- slick CSS -->
-        <link rel="stylesheet" href="css/slick.css">
-        <!-- style CSS -->
-        <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-    </head>
-    
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Martine</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/flaticon.css' %}">
+    <!-- fontawesome CSS -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <!-- magnific CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/gijgo.min.css">
+    <!-- niceselect CSS -->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- slick CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+
 
 <body>
     <!--::header part start::-->
@@ -127,12 +127,14 @@
                     <div class="row justify-content-end">
                         <div class="col-lg-6 col-md-6">
                             <div class="event_slider_content">
-                                <h5>Upcoming Event</h5>
-                                <h2>Maldeve - Asia</h2>
-                                <p>Waters make fish every without firmament saw had. Morning air subdue. Our. Air very
-                                    one. Whales grass is fish whales winged.
-                                </p>
-                                <p>date: <span>12 Aug 2019</span> </p>
+                                <img src="{{ market.photo.url }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="event_slider_content">
+                                <h2>{{market.user}}</h2>
+                                <p>{{market.content}}</p>
+                                <p>date: <span>{{market.created_at}}</span> </p>
                                 <p>Cost: <span>Start from $820</span> </p>
                                 <p>Organizer: <span> Martine Agency</span> </p>
                             </div>
@@ -150,18 +152,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="content_iner">
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one.
-                            Whales grass is fish whales winged night yielding land creeping that seed appear were
-                            bearing.</p>
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one.
-                            Whales grass is fish whales winged night yielding land creeping that seed appear were
-                            bearing.
-                            Their</p>
-                        <p>Waters make fish every without firmament saw had. Morning air subdue. Our Air very one.
-                            Whales grass is fish whales winged night yielding land creeping that seed appear were
-                            bearing.</p>
                         <div class="tour_details_content_btn">
-                            <a href="#" class="btn_1">Book Ticket</a>
+                            <a href="{% url 'index' %}" class="btn_1">돌아가기</a>
                         </div>
                     </div>
                 </div>
@@ -205,7 +197,7 @@
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
                                     required="" type="email">
                                 <button class="click-btn btn btn-default text-uppercase"> <i
-                                        class="far fa-paper-plane"></i>
+                                        class="far fa-paper-plane"></img>
                                 </button>
                                 <div style="position: absolute; left: -5000px;">
                                     <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""

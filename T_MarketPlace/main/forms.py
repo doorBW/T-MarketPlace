@@ -1,14 +1,14 @@
 from django import forms
-from .models import *
+from .models import Market, Festival
 
 
 class MarketForm(forms.ModelForm):
     class Meta:
         model = Market
-        fields = ['user', 'photo', 'content', ]
+        fields = ['user', 'url', 'content', 'photo', ]
 
-        help_text = {
-            'user': '작성자',
-            'photo': '사진 업로드',
-            'content': '간단한 설명'
-        }
+
+class FestivalForm(forms.ModelForm):
+    class Meta:
+        model = Festival
+        fields = ['name', 'market', 'url', 'content', 'photo', ]

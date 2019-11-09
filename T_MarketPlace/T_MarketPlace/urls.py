@@ -12,4 +12,5 @@ urlpatterns = [
     path('detail/festival/<int:festival_id>/',
          main.views.festival_detail, name='festival_detail'),
     path('market/new/', main.views.market_new, name='market_new'),
+    path('festival/new/', main.views.festival_new, name='festival_new'),
 ]

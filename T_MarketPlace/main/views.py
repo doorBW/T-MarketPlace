@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Market, Festival
-from .forms import MarketForm
+from .forms import MarketForm, FestivalForm
 # Create your views here
 
 
@@ -13,14 +13,17 @@ def index(req):
     festivals = Festival.objects.all()
     return render(req, 'index.html', {'markets': markets, 'festivals': festivals})
 
+
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
-            user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+            user = User.objects.create_user(
+                request.POST['username'], password=request.POST['password1'])
             auth.login(request, user)
             user.save()
             return redirect('index')
     return render(request, './signup.html')
+
 
 def login(request):
     if request.method == 'POST':
@@ -37,10 +40,10 @@ def login(request):
         return render(request, 'login.html')
     return render(request, 'login.html')
 
+
 def logout(request):
     auth.logout(request)
     return redirect('index')
-
 
 
 def market_detail(req, market_id):
@@ -55,12 +58,25 @@ def festival_detail(req, festival_id):
 
 def market_new(req):
     if req.method == 'POST':
-        marketform = MarketForm(req.POST)
-        if marketform.is_valid():
+        form = MarketForm(req.POST, req.FILES)
+        if form.is_valid():
             post = form.save(commit=False)
-            post.pub_date = timezone.now()
+            post.created_at = timezone.now()
             post.save()
             return redirect('index')
     else:
-        marketform = MarketForm()
-        return render(req, 'newMarket.html', {'marketform': marketform})
+        form = MarketForm()
+        return render(req, 'newMarket.html', {'form': form})
+
+
+def festival_new(req):
+    if req.method == 'POST':
+        form = FestivalForm(req.POST, req.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.created_at = timezone.now()
+            post.save()
+            return redirect('index')
+    else:
+        form = FestivalForm()
+        return render(req, 'newFestival.html', {'form': form})

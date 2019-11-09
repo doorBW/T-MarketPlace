@@ -129,7 +129,7 @@
                                             {% for festival in festivals %}
                                             <a class="dropdown-item" href="{% url 'festival_detail' festival.id %}">festival</a>
                                             {% endfor %}
-                                            <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                                            <a class="dropdown-item" href="{% url 'festival_new' %}">올리기</a>
                                         </div>
                                     </li>
                                     <li class="nav-item dropdown">

@@ -2994,14 +2994,10 @@ ul {
 
 /********** tour details content css start ***********/
 /* line 3, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_tour_details_content.scss */
-.tour_details_content p {
-  margin-bottom: 10px;
-}
 
 /* line 6, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_tour_details_content.scss */
 .tour_details_content .tour_details_content_btn {
   text-align: center;
-  margin-top: 80px;
 }
 
 /* line 2, /Applications/MAMP/htdocs/palash/cl/july 2019/193 Travel/193 travel html/sass/_hotel&rasturant.scss */
