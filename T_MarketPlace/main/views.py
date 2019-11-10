@@ -11,12 +11,6 @@ from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
 
-<<<<<<< HEAD
-=======
-import json
-import requests
-from time import sleep
->>>>>>> f3cf5a63168b312e9eb14e09464cc6aa338af968
 # Create your views here
 
 # 메인 페이지
@@ -110,9 +104,9 @@ def festival_new(req):
         return render(req, 'newFestival.html', {'markets': markets})
 
 
-def market_update(req, market_id):
+def market_update(req, pk):
     #mk = Market.objects.get(pk=market_id)
-    mk = get_object_or_404(Market, pk=market_id)
+    mk = get_object_or_404(Market, pk=pk)
     if req.method == 'POST':
         mk.name = req.POST['name']
         mk.address = req.POST['address']
@@ -126,9 +120,10 @@ def market_update(req, market_id):
         user = req.user.username
         mk.author = user
         mk.save()
-        return redirect('/detail/+int(market.pk)')
+        return redirect('index')
     else:
-        return render(req, 'updateMarket.html')
+        
+        return render(req, 'newMarket.html')
 
 
 def festival_update(req, festival_id):
@@ -146,10 +141,6 @@ def festival_update(req, festival_id):
     else:
         return render(req, 'updateFestival.html', {'markets': markets})
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f3cf5a63168b312e9eb14e09464cc6aa338af968
 # 메인 페이지 지도랑 사진 ajax
 def market_click_ajax_event(req):
     sleep(2)
