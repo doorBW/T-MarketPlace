@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from time import sleep
 import requests
 import json
@@ -10,7 +11,6 @@ from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
-
 # Create your views here
 
 # 메인 페이지
@@ -90,7 +90,7 @@ def market_new(req):
 
 
 def festival_new(req):
-    markets = Market.objects.all()
+    markets = Market.objects.all().order_by('name')
     if req.method == 'POST':
         fest = Festival(name=req.POST['name'], date=req.POST['date'], pay=req.POST['pay'],
                         host=req.POST['host'], address=req.POST['address'], url=req.POST['url'], content=req.POST['content'])
@@ -162,7 +162,10 @@ def auto_market_data_saving(req):
     sleep(2)
     data_url = "http://115.84.165.224/bigfile/iot/sheet/json/download.do?srvType=S&infId=OA-1176&serviceKind=1&pageNo=2&gridTotalCnt=330&ssUserId=SAMPLE_VIEW&strWhere&strOrderby"
     post_res = requests.post(data_url)
-    datas = post_res.json()["DATA"]
+    post_res = post_res.content.decode('utf-8')
+    datas = json.loads(post_res)["DATA"]
+    # datas = post_res.json()["DATA"]
+    # datas = json.loads(datas)
     insert_cnt = 0
     print(datas)
     for data in datas:
