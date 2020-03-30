@@ -11,9 +11,7 @@ from .models import Market, Festival, Profile
 from django.http import HttpResponse
 from .models import Market, Festival
 from .forms import MarketForm, FestivalForm
-# Create your views here
-
-# 메인 페이지
+# Create your views here  
 
 
 def index(req):
